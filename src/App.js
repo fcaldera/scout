@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchExchanges } from './actions';
 import Button from './Button';
+import Spinner from './Spinner';
 import './App.css';
 
 const mapStateToProps = ({ exchangeRates }) => {
@@ -42,12 +43,19 @@ class App extends Component {
     );
   }
 
+  renderSpinner() {
+    const { loading } = this.props;
+    if (!loading) return null;
+    return <Spinner />;
+  }
+
   render() {
     return (
       <div className="App">
         {this.renderButton()}
         {this.renderError()}
         {this.renderData()}
+        {this.renderSpinner()}
       </div>
     );
   }
