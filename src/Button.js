@@ -13,6 +13,11 @@ const Button = styled.button`
   &:focus {
     outline: none;
   }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
 `;
 
 export default Button;
