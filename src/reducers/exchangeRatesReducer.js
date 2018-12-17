@@ -6,11 +6,11 @@ import {
 
 const initialState = {
   loading: false,
-  exchangeRates: [],
+  data: null,
   error: null,
 };
 
-export default function reducer(state = initialState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_EXCHANGES_STARTED:
       return {
@@ -22,7 +22,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         loading: false,
         error: null,
-        exchangeRates: action.payload,
+        data: action.payload,
       };
     case FETCH_EXCHANGES_FAILURE:
       return {
@@ -34,3 +34,5 @@ export default function reducer(state = initialState, action) {
       return state;
   }
 }
+
+export default reducer;
