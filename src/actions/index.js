@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const EXCHANGE_REQUEST = 'EXCHANGE_REQUEST';
-export const EXCHANGE_SUCCESS = 'EXCHANGE_SUCCESS';
-export const EXCHANGE_FAILURE = 'EXCHANGE_FAILURE';
+export const FETCH_EXCHANGES_STARTED = 'FETCH_EXCHANGES_STARTED';
+export const FETCH_EXCHANGES_SUCCESS = 'FETCH_EXCHANGES_SUCCESS';
+export const FETCH_EXCHANGES_FAILURE = 'FETCH_EXCHANGES_FAILURE';
 
 export function fetchExchanges() {
   return dispatch => {
@@ -17,20 +17,20 @@ export function fetchExchanges() {
 
 function fetchStarted() {
   return {
-    type: EXCHANGE_REQUEST,
+    type: FETCH_EXCHANGES_STARTED,
   };
 }
 
 function fetchSuccess(data) {
   return {
-    type: EXCHANGE_SUCCESS,
+    type: FETCH_EXCHANGES_SUCCESS,
     payload: data,
   };
 }
 
 function fetchError(error) {
   return {
-    type: EXCHANGE_SUCCESS,
+    type: FETCH_EXCHANGES_FAILURE,
     payload: error,
   };
 }
