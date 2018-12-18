@@ -2,6 +2,7 @@ import {
   FETCH_EXCHANGES_STARTED,
   FETCH_EXCHANGES_SUCCESS,
   FETCH_EXCHANGES_FAILURE,
+  RESET_ERROR,
 } from '../actions';
 
 const initialState = {
@@ -28,7 +29,12 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        error: action.payload.error,
+        error: action.payload.message,
+      };
+    case RESET_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

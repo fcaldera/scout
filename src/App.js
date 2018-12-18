@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchExchanges } from './actions';
+import { fetchExchanges, resetError } from './actions';
 import Button from './Button';
 import Spinner from './Spinner';
+import Modal from './Modal';
 import './App.css';
 
 const mapStateToProps = ({ exchangeRates }) => {
   return {
     loading: exchangeRates.loading,
     data: exchangeRates.data,
-    errror: exchangeRates.error,
+    error: exchangeRates.error,
   };
 };
 
-class App extends Component {
+export class App extends Component {
+  handleCloseModal = () => {
+    const { resetError } = this.props;
+    if (resetError) resetError();
+  };
+
   renderButton() {
     const { loading, data, error } = this.props;
     if (loading || data || error) return null;
@@ -22,23 +28,29 @@ class App extends Component {
 
   renderError() {
     const { error } = this.props;
-    if (!error) return;
-    return <div>{error}</div>;
+    return (
+      <Modal isOpen={!!error} onRequestClose={this.handleCloseModal}>
+        <p>{error}</p>
+        <Button onClick={this.handleCloseModal}>Close</Button>
+      </Modal>
+    );
   }
 
   renderData() {
     const { data } = this.props;
     if (!data) return null;
     const rates = Object.keys(data.rates);
-    console.log(rates);
+
     return (
       <table>
-        {rates.map(key => (
-          <tr key={key}>
-            <td className="text-left">{key}</td>
-            <td className="text-right">{data.rates[key]}</td>
-          </tr>
-        ))}
+        <tbody>
+          {rates.map(key => (
+            <tr key={key}>
+              <td className="text-left">{key}</td>
+              <td className="text-right">{data.rates[key]}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     );
   }
@@ -63,5 +75,5 @@ class App extends Component {
 
 export default connect(
   mapStateToProps,
-  { fetchExchanges }
+  { fetchExchanges, resetError }
 )(App);

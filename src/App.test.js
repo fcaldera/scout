@@ -1,9 +1,33 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { mount } from 'enzyme';
+import { App } from './App';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  mount(<App />);
+});
+
+it('renders only a button by default', () => {
+  const wrapper = mount(<App />);
+  expect(wrapper.find('button')).toExist();
+  expect(wrapper.find('Spinner')).not.toExist();
+  expect(wrapper.find('table')).not.toExist();
+});
+
+it('loads data on button click', () => {
+  const spy = jest.fn();
+  const wrapper = mount(<App fetchExchanges={spy} />);
+  const button = wrapper.find('button');
+  button.simulate('click');
+  expect(spy).toBeCalled();
+});
+
+it('renders a spinner when loading', () => {
+  const wrapper = mount(<App loading />);
+  expect(wrapper.find('Spinner')).toExist();
+});
+
+it('renders data', () => {
+  const data = { rates: { foo: 'bar', tar: 'taz' } };
+  const wrapper = mount(<App data={data} />);
+  expect(wrapper.find('table')).toHaveText('foobartartaz');
 });

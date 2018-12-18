@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 
-ReactModal.setAppElement('#root'); //Avoid accesibility warning
-ReactModal.defaultStyles.overlay.backgroundColor = '#282c34';
+if (process.env.NODE_ENV !== 'test') {
+  ReactModal.setAppElement('#root'); //Avoid accesibility warning
+  ReactModal.defaultStyles.overlay.backgroundColor = '#282c34';
+}
 
 const Modal = styled(ReactModal)`
   min-height: 100vh;
