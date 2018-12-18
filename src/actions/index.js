@@ -10,7 +10,7 @@ export function fetchExchanges() {
     dispatch(fetchStarted());
 
     axios
-      .get('https://api.exchangeratesapi.iojh/latest')
+      .get('https://api.exchangeratesapi.io/latest')
       .then(res => dispatch(fetchSuccess(res.data)))
       .catch(err => dispatch(fetchError(err)));
   };

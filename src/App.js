@@ -28,8 +28,10 @@ export class App extends Component {
 
   renderError() {
     const { error } = this.props;
+    if (!error) return null;
+
     return (
-      <Modal isOpen={!!error} onRequestClose={this.handleCloseModal}>
+      <Modal>
         <p>{error}</p>
         <Button onClick={this.handleCloseModal}>Close</Button>
       </Modal>

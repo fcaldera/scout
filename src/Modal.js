@@ -1,12 +1,6 @@
 import styled from 'styled-components';
-import ReactModal from 'react-modal';
 
-if (process.env.NODE_ENV !== 'test') {
-  ReactModal.setAppElement('#root'); //Avoid accesibility warning
-  ReactModal.defaultStyles.overlay.backgroundColor = '#282c34';
-}
-
-const Modal = styled(ReactModal)`
+const Modal = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
