@@ -16,14 +16,17 @@ const mapStateToProps = ({ exchangeRates }) => {
 
 export class App extends Component {
   handleCloseModal = () => {
-    const { resetError } = this.props;
-    if (resetError) resetError();
+    this.props.resetError();
   };
 
   renderButton() {
     const { loading, data, error } = this.props;
     if (loading || data || error) return null;
-    return <Button onClick={this.props.fetchExchanges}>Load data</Button>;
+    return (
+      <Button onClick={this.props.fetchExchanges} data-test-id="button">
+        Load data
+      </Button>
+    );
   }
 
   renderError() {
@@ -31,9 +34,11 @@ export class App extends Component {
     if (!error) return null;
 
     return (
-      <Modal>
-        <p>{error}</p>
-        <Button onClick={this.handleCloseModal}>Close</Button>
+      <Modal data-test-id="modal-error">
+        <p data-test-id="modal-error-msg">{error}</p>
+        <Button onClick={this.handleCloseModal} data-test-id="close-button">
+          Close
+        </Button>
       </Modal>
     );
   }
@@ -44,10 +49,10 @@ export class App extends Component {
     const rates = Object.keys(data.rates);
 
     return (
-      <table>
+      <table data-test-id="data">
         <tbody>
           {rates.map(key => (
-            <tr key={key}>
+            <tr key={key} data-test-id="data-record">
               <td className="text-left">{key}</td>
               <td className="text-right">{data.rates[key]}</td>
             </tr>
@@ -60,7 +65,7 @@ export class App extends Component {
   renderSpinner() {
     const { loading } = this.props;
     if (!loading) return null;
-    return <Spinner />;
+    return <Spinner data-test-id="spinner" />;
   }
 
   render() {
